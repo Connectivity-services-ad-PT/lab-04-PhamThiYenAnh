@@ -41,8 +41,10 @@ jobs:
         run: npm run test:local
 
       - name: Show container logs on failure
-        if: failure()
-        run: docker logs fit4110-iot-lab04 || true
+        if: always()
+        run: |
+          docker logs fit4110-iot-lab04 > reports/docker-logs.txt 2>&1 || true
+          cat reports/docker-logs.txt || true
 
       - name: Stop container
         if: always()
